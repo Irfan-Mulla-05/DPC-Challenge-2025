@@ -1,0 +1,43 @@
+/*
+Day 11 of 30 🗓
+
+Problem : Permutations of a String
+You are given a string s. Your task is to generate and return all possible permutations of the characters in the string. A permutation is a rearrangement of the characters in the string, and each character must appear exactly once in every permutation. If there are duplicate characters in the string, the resulting permutations should also be unique (i.e., no repeated permutations).
+
+Input :
+A string s consisting of lowercase English letters. The length of the string n satisfies 1≤𝑛≤9.
+Input: "abc"
+
+Output :
+An array of strings containing all unique permutations of the input string. The order of permutations in the output does not matter.
+Output: ["abc", "acb", "bac", "bca", "cab", "cba"]
+
+*/
+
+import java.util.*;
+
+public class Day11 {
+    static void findPermutations(String s, String current, HashSet<String> seen, List<String> result) {
+        if (s.length() == 0) {
+            if (!seen.contains(current)) {
+                result.add(current);
+                seen.add(current);
+            }
+            return;
+        }
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            String left = s.substring(0, i);
+            String right = s.substring(i + 1);
+            findPermutations(left + right, current + ch, seen, result);
+        }
+    }
+
+    public static void main(String[] args) {
+        String str = "abc";
+        List<String> result = new ArrayList<>();
+        HashSet<String> seen = new HashSet<>();
+        findPermutations(str, "", seen, result);
+        System.out.println(result);
+    }
+}
