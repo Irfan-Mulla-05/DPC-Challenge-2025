@@ -1,3 +1,53 @@
 /*
+Day 13 of 30 🗓
+
+Problem : Longest Palindromic Substring
+You are given a string s. Your task is to find and return the longest palindromic substring within the given string. A palindrome is a string that reads the same forwards and backwards.
+
+Input :
+A string s of length n. The length of the string satisfies 1≤n≤1000.
+Input: "babad"
+
+Output :
+Return the longest substring of s that is a palindrome. If there are multiple solutions, return the first one that occurs.
+Output: "bab"
 
 */
+public class Day13 {
+    public static String longestPalindrome(String s) {
+        int n = s.length();
+        if (n == 0) return "";
+
+        int start = 0, maxLen = 1;
+
+        for (int i = 0; i < n; i++) {
+            int l = i, r = i;
+            while (l >= 0 && r < n && s.charAt(l) == s.charAt(r)) {
+                if (r - l + 1 > maxLen) {
+                    start = l;
+                    maxLen = r - l + 1;
+                }
+                l--;
+                r++;
+            }
+
+            l = i;
+            r = i + 1;
+            while (l >= 0 && r < n && s.charAt(l) == s.charAt(r)) {
+                if (r - l + 1 > maxLen) {
+                    start = l;
+                    maxLen = r - l + 1;
+                }
+                l--;
+                r++;
+            }
+        }
+        return s.substring(start, start + maxLen);
+    }
+
+    public static void main(String[] args) {
+        String s = "babad";
+        System.out.println(longestPalindrome(s));
+    }
+}
+
