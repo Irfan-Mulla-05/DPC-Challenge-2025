@@ -1,0 +1,34 @@
+/*
+Day 16 of 30 🗓
+
+Problem : LCM (Least Common Multiple) of Two Numbers
+You are given two integers, N and M. Your task is to find the Least Common Multiple (LCM) of these two numbers. The LCM of two integers is the smallest positive integer that is divisible by both N and M.
+
+Input :
+* Two integers N and M, where 1≤N,M≤109
+* N = 4, M = 6
+
+Output :
+A single integer representing the Least Common Multiple of N and M.
+Output: 12
+
+*/
+public class Day16 {
+    public static long gcd(long a, long b) {
+        while (b != 0) {
+            long t = b;
+            b = a % b;
+            a = t;
+        }
+        return a;
+    }
+
+    public static long lcm(long n, long m) {
+        return (n / gcd(n, m)) * m;
+    }
+
+    public static void main(String[] args) {
+        long n = 4, m = 6;
+        System.out.println(lcm(n, m));
+    }
+}
