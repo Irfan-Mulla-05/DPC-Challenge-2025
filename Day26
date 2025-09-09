@@ -1,0 +1,51 @@
+/*
+Day 26 of 30 🗓
+
+Problem : Detect a Cycle in an Undirected Graph
+You are given an undirected graph represented by an adjacency list. Your task is to determine if the graph contains any cycle.
+A cycle is formed if you can traverse through a sequence of edges that starts and ends at the same vertex, with at least one edge in between.
+
+Input :
+* An integer V representing the number of vertices in the graph.
+* A list of edges, where each edge connects two vertices of the graph.
+* Input: V = 5, Edges = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 0]]
+
+Output :
+Return true if the graph contains a cycle, otherwise return false.
+Output: true
+*/
+import java.util.*;
+
+public class Day26 {
+    static List<List<Integer>> adj;
+
+    public static boolean isCyclic(int V, int[][] edges) {
+        adj = new ArrayList<>();
+        for (int i = 0; i < V; i++) adj.add(new ArrayList<>());
+        for (int[] e : edges) {
+            adj.get(e[0]).add(e[1]);
+            adj.get(e[1]).add(e[0]);
+        }
+        boolean[] visited = new boolean[V];
+        for (int i = 0; i < V; i++) {
+            if (!visited[i] && dfs(i, visited, -1)) return true;
+        }
+        return false;
+    }
+
+    private static boolean dfs(int node, boolean[] visited, int parent) {
+        visited[node] = true;
+        for (int neighbor : adj.get(node)) {
+            if (!visited[neighbor]) {
+                if (dfs(neighbor, visited, node)) return true;
+            } else if (neighbor != parent) return true;
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        int V = 5;
+        int[][] edges = {{0,1},{1,2},{2,3},{3,4},{4,0}};
+        System.out.println(isCyclic(V, edges));
+    }
+}
